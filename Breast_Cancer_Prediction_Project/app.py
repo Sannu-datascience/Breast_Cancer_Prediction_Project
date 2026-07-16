@@ -1,7 +1,9 @@
 import streamlit as st
 import joblib
+import os
 import numpy as np
-model=joblib.load("breast_cancer_model.pkl")
+model_path = os.path.join(os.path.dirname(__file__),"breast_cancer_model.pkl")
+model=joblib.load(model_path)
 st.title("enter the following values:")
 mean_radius=st.number_input("Mean Radius",value=14.0)
 mean_texture=st.number_input("Mean Texture",value=20.0)
