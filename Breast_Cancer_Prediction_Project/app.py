@@ -1,23 +1,56 @@
 import streamlit as st
 import joblib
-import os
 import numpy as np
-model_path = os.path.join(os.path.dirname(__file__),"breast_cancer_model.pkl")
-model=joblib.load(model_path)
-st.title("enter the following values:")
-mean_radius=st.number_input("Mean Radius",value=14.0)
-mean_texture=st.number_input("Mean Texture",value=20.0)
-mean_perimeter=st.number_input("Mean Perimeter",value=90.0)
-mean_area = st.number_input("Mean Area", value=600.0)
-mean_smoothness = st.number_input("Mean Smoothness", value=0.1)
+import os
+
+model_path = os.path.join(os.path.dirname(__file__), "breast_cancer_model.pkl")
+model = joblib.load(model_path)
+
+st.title("Breast Cancer Prediction")
+
+feature_names = [
+    "mean radius",
+    "mean texture",
+    "mean perimeter",
+    "mean area",
+    "mean smoothness",
+    "mean compactness",
+    "mean concavity",
+    "mean concave points",
+    "mean symmetry",
+    "mean fractal dimension",
+
+    "radius error",
+    "texture error",
+    "perimeter error",
+    "area error",
+    "smoothness error",
+    "compactness error",
+    "concavity error",
+    "concave points error",
+    "symmetry error",
+    "fractal dimension error",
+
+    "worst radius",
+    "worst texture",
+    "worst perimeter",
+    "worst area",
+    "worst smoothness",
+    "worst compactness",
+    "worst concavity",
+    "worst concave points",
+    "worst symmetry",
+    "worst fractal dimension"
+]
+
+inputs = []
+for feature in feature_names:
+    value = st.number_input(feature, value=0.0)
+    inputs.append(value)
 
 if st.button("Predict"):
-    input_data = np.zeros((1, 30))
-    input_data[0][0] = mean_radius
-    input_data[0][1] = mean_texture
-    input_data[0][2] = mean_perimeter
-    input_data[0][3] = mean_area
-    input_data[0][4] = mean_smoothness
+
+    input_data = np.array(inputs).reshape(1, 30)
 
     prediction = model.predict(input_data)
 
